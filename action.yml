@@ -1,0 +1,30 @@
+name: SFDX Validate
+description: Validate your Salesforce changes using the sfdx-auth-url
+author: Zackary Frazier
+
+inputs:
+  auth-file:
+    description: 'The path to the auth file file'
+    required: true
+    default: 'authFile.json'
+
+jobs:
+  build:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Install SFDX
+      run: |
+        npm i -g @salesforce/cli
+        sf --version
+    - name: Install Plugins
+      run: |
+        echo y | sf plugins install sfdx-git-delta
+    - name: Authenticate
+      run: | 
+        sf org login sfdx-url --sfdx-url-file authFile.json --set-default-dev-hub --alias DevHub
+    - name: Validate
+      run: |
+        sf sgd source delta --to "HEAD" --from "origin/main" --output "." 
+        sf project deploy validate --test-level RunLocalTests --manifest package/package.xml -o DevHub -w 120 --json --pre-destructive-changes ./destructiveChanges/destructiveChanges.xml > validate.json

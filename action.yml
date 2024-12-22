@@ -1,5 +1,5 @@
 name: SFDX Validate
-description: Validate your Salesforce changes using the sfdx-auth-url
+description: Validate your Salesforce changes using an sfdx auth file
 author: Zackary Frazier
 
 inputs:

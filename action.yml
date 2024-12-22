@@ -25,7 +25,7 @@ runs:
         echo y | sf plugins install sfdx-git-delta
     - name: Authenticate
       run: | 
-        sf org login sfdx-url --sfdx-url-file authFile.json --set-default-dev-hub --alias DevHub
+        sf org login sfdx-url --sfdx-url-file "${{ inputs.auth-file }}" --set-default-dev-hub --alias DevHub
     - name: Validate
       run: |
         sf sgd source delta --to "HEAD" --from "origin/main" --output "." 

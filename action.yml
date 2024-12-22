@@ -10,23 +10,23 @@ inputs:
 
 runs:
   using: composite
-  shell: bash
   steps:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
         node-version: '20'
     - name: Install SFDX
+      shell: bash
       run: |
         npm i -g @salesforce/cli
         sf --version
-    - name: Install Plugins
-      run: |
         echo y | sf plugins install sfdx-git-delta
     - name: Authenticate
+      shell: bash
       run: | 
         sf org login sfdx-url --sfdx-url-file "${{ inputs.auth-file }}" --set-default-dev-hub --alias DevHub
     - name: Validate
+      shell: bash
       run: |
         sf sgd source delta --to "HEAD" --from "origin/main" --output "." 
         sf project deploy validate --test-level RunLocalTests --manifest package/package.xml -o DevHub -w 120 --json --pre-destructive-changes ./destructiveChanges/destructiveChanges.xml > validate.json

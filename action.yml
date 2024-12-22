@@ -8,8 +8,10 @@ inputs:
     required: true
     default: 'authFile.json'
 
-jobs:
-  build:
+runs:
+  using: composite
+  shell: bash
+  steps:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:

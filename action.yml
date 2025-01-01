@@ -13,7 +13,7 @@ inputs:
     default: 'origin/master'
   out-file:
     description: 'The path to the output file'
-    required: false
+    required: true
     default: 'validate.json'
 
 runs:

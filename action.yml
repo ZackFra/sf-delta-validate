@@ -36,5 +36,5 @@ runs:
     - name: Validate
       shell: bash
       run: |
-        sf sgd source delta --to "HEAD" --from "${{ inputs.branch }}" --o "." 
+        sf sgd source delta --to "HEAD" --from "${{ inputs.branch }}" -o "." 
         sf project deploy validate --test-level RunLocalTests --manifest package/package.xml -o DevHub -w 120 --json --pre-destructive-changes ./destructiveChanges/destructiveChanges.xml > ${{ inputs.out-file }}
